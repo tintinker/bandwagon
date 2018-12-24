@@ -1,0 +1,19 @@
+{
+  "name": "drops",
+  "version": "1.0.0",
+  "description": "Find out when you're fav artists release new music",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tintinker/drops.git"
+  },
+  "author": "Justin Tinker",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/tintinker/drops/issues"
+  },
+  "homepage": "https://github.com/tintinker/drops#readme"
+}
