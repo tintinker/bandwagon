@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/tintinker/drops/issues"
   },
-  "homepage": "https://github.com/tintinker/drops#readme"
+  "homepage": "https://github.com/tintinker/drops#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
+  }
 }
