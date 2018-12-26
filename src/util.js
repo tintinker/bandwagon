@@ -22,8 +22,7 @@ exports.apiRequest = function(endpoint, access_token, refresh_token, success_cal
   // use the access token to access the Spotify Web API
   send.get(options, function(e1, r1, b1) {
     if(b1.error) {
-      if(b1.error.status === 401) {
-        if(b1.error.message !== 'Invalid access token') {
+        if(b1.error.status !== 401 || b1.error.message !== 'The access token expired') {
           console.log("unrecognized error: "+b1.error.message);
           return;
         }
@@ -37,7 +36,6 @@ exports.apiRequest = function(endpoint, access_token, refresh_token, success_cal
             exports.apiRequest(endpoint, newToken, refresh_token, success_callback, exports.preventLoopCallback, false);
           }
         });
-      }
     } else {
       success_callback(b1);
     }
