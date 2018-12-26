@@ -9,7 +9,7 @@ let constants = require('./constants.js')
 
 let client_id = secrets.client_id
 let client_secret = secrets.client_secret; // Your secret
-let redirect_uri = constants.redirect_uri; // Your redirect uri
+let redirect_uri = constants.urls.redirect; // Your redirect uri
 
 
 
@@ -20,7 +20,7 @@ exports.getAuthApp = function(scope) {
   app.use(cors());
   let stateKey = 'spotify_auth_state';
 
-  app.get('/login', function(request, response) {
+  app.get('/sauce/authflow/login', function(request, response) {
     console.log('login page');
     let state = utils.generateRandomString(16);
     response.cookie(stateKey, state);
@@ -42,8 +42,6 @@ exports.getAuthApp = function(scope) {
      let code = request.query.code || null;
      let state = request.query.state || null;
      let storedState = request.cookies ? request.cookies[stateKey] : null;
-     console.log("returned state:"+state);
-     console.log("stored state:"+storedState);
      console.log(JSON.stringify(request.cookies));
      if(!state || state !== storedState) {
        console.log("mismatch");
@@ -79,13 +77,13 @@ exports.getAuthApp = function(scope) {
 
        console.log("setting cookie: "+body.access_token);
        console.log('setting fre cookie:'+body.refresh_token);
-       response.cookie(constants.access_token_cookie, body.access_token);
-       response.cookie(constants.refresh_token_cookie, body.refresh_token);
-       response.redirect('/');
+       response.cookie(constants.cookies.access_token, body.access_token);
+       response.cookie(constants.cookies.refresh_token, body.refresh_token);
+       response.redirect('/postcallback');
     });
   });
 
-  app.get('/refresh_token', function(request, response) {
+  app.get('/sauce/authflow/refresh_token', function(request, response) {
 
   // requesting access token from refresh token
   var refresh_token = request.query.refresh_token;
@@ -108,6 +106,13 @@ exports.getAuthApp = function(scope) {
     }
   });
 });
+
+  app.get('/sauce/authflow/logout', function(request, response) {
+    console.log("logging out");
+    response.clearCookie(constants.cookies.access_token);
+    response.clearCookie(constants.cookies.refresh_token);
+    response.send("loggout out");
+  });
 
   return app;
 }

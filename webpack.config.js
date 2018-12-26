@@ -7,12 +7,14 @@ module.exports = {
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
+    'axios': 'axios'
   },
   entry: {
-    index: path.resolve(__dirname, "views/index.page.js")
+    home: path.resolve(__dirname, "views/home.page.js"),
+    logout: path.resolve(__dirname, "views/logout.page.js")
   },
   output: {
-    path: path.resolve(__dirname, "pages"),
+    path: path.resolve(__dirname, "pages/js"),
     filename: "[name].bundle.js"
   },
   module: {

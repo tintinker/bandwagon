@@ -1,4 +1,4 @@
-let auth = require('./auth.js');
+let authflow = require('./authflow.js');
 let constants = require('./constants.js');
 let utils = require('./util.js');
 
@@ -9,31 +9,60 @@ let querystring = require('querystring');
 let cookieparser = require('cookie-parser');
 let cors = require('cors');
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+let app = authflow.getAuthApp(constants.general.scope);
+app.use(express.static(path.join(__dirname,'../pages')));
 
-let app = auth.getAuthApp('user-read-private user-read-email');
-//app.use(express.static(path.join(__dirname,'../public')));
-
-app.get('/', function(request, response){
-
-  let printName = function(apiData) {
-    response.send(apiData.display_name);
-  };
-
-  console.log("starting");
-  utils.apiRequest('https://api.spotify.com/v1/me',
-    request.cookies[constants.access_token_cookie],
-    request.cookies[constants.refresh_token_cookie],
-    printName,
-    function(newToken) {
-      response.cookie(constants.access_token_cookie, newToken, {overwrite:true});
-    },
-    true
-  );
-
-
+app.get('/postcallback', function(request, response){
+  response.redirect('/');
 });
+
+app.get('/login', function(request, response){
+  response.redirect('/sauce/authflow/login');
+});
+
+app.get('/sauce/api/userinfo', function(request, response){
+
+  console.log("getting user info");
+  utils.apiRequest('https://api.spotify.com/v1/me',
+    request.cookies[constants.cookies.access_token],
+    request.cookies[constants.cookies.refresh_token],
+    true,
+    function(basicUserData) {
+      response.send(JSON.stringify({
+        name: basicUserData.display_name,
+        picture: basicUserData.images ? basicUserData.images[0].url : null
+      }));
+    },
+    function(newToken) {
+      response.cookie(constants.cookies.access_token, newToken, {overwrite:true});
+    },
+    function() {
+      response.status(401).send(constants.messages.login_required);
+    }
+  );
+});
+
+app.get('/sauce/api/favartists', function(request, response){
+
+  console.log("getting fav artists");
+  utils.apiRequest('https://api.spotify.com/v1/me/top/artists',
+    request.cookies[constants.cookies.access_token],
+    request.cookies[constants.cookies.refresh_token],
+    true,
+    function(favArtists) {
+      console.log(favArtists);
+      response.send(JSON.stringify(favArtists.items));
+    },
+    function(newToken) {
+      response.cookie(constants.cookies.access_token, newToken, {overwrite:true});
+    },
+    function() {
+      response.status(401).send(constants.messages.login_required);
+    }
+  );
+});
+
+
 
 app.listen('4321');
 console.log('Listening on 4321');

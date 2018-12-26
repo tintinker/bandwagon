@@ -12,7 +12,7 @@ exports.generateRandomString = function(length) {
   return text;
 };
 
-exports.apiRequest = function(endpoint, access_token, refresh_token, success_callback, fail_callback, retry) {
+exports.apiRequest = function(endpoint, access_token, refresh_token, retry, success_callback, refresh_callback, no_token_callback, fail_callback) {
   var options = {
     url: endpoint,
     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -22,24 +22,32 @@ exports.apiRequest = function(endpoint, access_token, refresh_token, success_cal
   // use the access token to access the Spotify Web API
   send.get(options, function(e1, r1, b1) {
     if(b1.error) {
-        if(b1.error.status !== 401 || b1.error.message !== 'The access token expired') {
-          console.log("unrecognized error: "+b1.error.message);
-          return;
+        if(b1.error.message === 'The access token expired') {
+          let uri = constants.urls.root + "/sauce/authflow/refresh_token?" + querystring.stringify({
+            refresh_token: refresh_token
+          });
+          send.get({uri:uri}, function(e2, r2, b2) {
+            let newToken = JSON.parse(b2).access_token;
+            refresh_callback(newToken);
+            if(retry) {
+              exports.apiRequest(endpoint, newToken, refresh_token, retry, success_callback, exports.preventLoopCallback, no_token_callback, fail_callback);;
+            }
+          });
         }
-        let uri = constants.root_url + "/refresh_token?" + querystring.stringify({
-          refresh_token: refresh_token
-        });
-        send.get({uri:uri}, function(e2, r2, b2) {
-          let newToken = JSON.parse(b2).access_token;
-          fail_callback(newToken);
-          if(retry) {
-            exports.apiRequest(endpoint, newToken, refresh_token, success_callback, exports.preventLoopCallback, false);
-          }
-        });
-    } else {
-      success_callback(b1);
-    }
-  });
+        else if(b1.error.message === 'Invalid access token') {
+          no_token_callback();
+        }
+        else {
+            console.log("unrecognized error: "+b1.error.message);
+            if(fail_callback){
+              fail_callback();
+            }
+        }
+      }
+      else {
+        success_callback(b1);
+      }
+    });
 }
 
 exports.preventLoopCallback = function(newToken) {
