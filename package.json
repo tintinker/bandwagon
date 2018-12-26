@@ -4,7 +4,8 @@
   "description": "See how exotic your taste in music is",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "node src/index.js",
+    "test": "nodemon --exec babel-node src/index.js",
     "build": "webpack --mode development"
   },
   "repository": {
@@ -25,7 +26,6 @@
     "querystring": "^0.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2",
     "request": "^2.88.0"
   },
   "browserslist": [
