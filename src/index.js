@@ -45,7 +45,15 @@ app.get('/sauce/api/userinfo', function(request, response){
 app.get('/sauce/api/favartists', function(request, response){
 
   console.log("getting fav artists");
-  utils.apiRequest('https://api.spotify.com/v1/me/top/artists',
+  console.log('https://api.spotify.com/v1/me/top/artists?' +
+    querystring.stringify({
+      'time_range': request.query[constants.query.term]
+    }));
+
+  utils.apiRequest('https://api.spotify.com/v1/me/top/artists?' +
+    querystring.stringify({
+      'time_range': request.query[constants.query.term]
+    }),
     request.cookies[constants.cookies.access_token],
     request.cookies[constants.cookies.refresh_token],
     true,

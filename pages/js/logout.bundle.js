@@ -139,7 +139,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("var root_url = \"http://localhost:4321\";\nmodule.exports = {\n  urls: {\n    root: root_url,\n    redirect: root_url + '/callback',\n    login: root_url + '/login',\n    logout: root_url + '/logout'\n  },\n  cookies: {\n    access_token: 'access_token',\n    refresh_token: 'refresh_token'\n  },\n  messages: {\n    login_required: 'login_required'\n  },\n  defaults: {\n    picture: \"http://cdn.techgyd.com/ft.png\"\n  },\n  general: {\n    scope: 'user-read-private user-read-email user-top-read'\n  }\n};\n\n//# sourceURL=webpack:///./views/constants.js?");
+eval("var root_url = \"http://localhost:4321\";\nvar local_api_url = root_url + '/sauce/api';\nmodule.exports = {\n  urls: {\n    root: root_url,\n    redirect: root_url + '/callback',\n    login: root_url + '/login',\n    logout: root_url + '/logout',\n    favartists: local_api_url + '/favartists',\n    userinfo: local_api_url + '/userinfo'\n  },\n  cookies: {\n    access_token: 'access_token',\n    refresh_token: 'refresh_token'\n  },\n  messages: {\n    login_required: 'login_required'\n  },\n  defaults: {\n    picture: \"http://cdn.techgyd.com/ft.png\"\n  },\n  query: {\n    term: \"term\"\n  },\n  general: {\n    scope: 'user-read-private user-read-email user-top-read'\n  }\n};\n\n//# sourceURL=webpack:///./views/constants.js?");
 
 /***/ }),
 

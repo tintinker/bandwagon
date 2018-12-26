@@ -1,5 +1,5 @@
 {
-  "name": "drops",
+  "name": "bandwagon",
   "version": "1.0.0",
   "description": "Find out when you're fav artists release new music",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tintinker/drops.git"
+    "url": "git+https://github.com/tintinker/bandwagon.git"
   },
   "author": "Justin Tinker",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/tintinker/drops/issues"
+    "url": "https://github.com/tintinker/bandwagon/issues"
   },
-  "homepage": "https://github.com/tintinker/drops#readme",
+  "homepage": "https://github.com/tintinker/bandwagon#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "cookie-parser": "^1.4.3",
@@ -38,6 +38,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
