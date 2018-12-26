@@ -1,7 +1,7 @@
 {
   "name": "bandwagon",
   "version": "1.0.0",
-  "description": "Find out when you're fav artists release new music",
+  "description": "See how exotic your taste in music is",
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
