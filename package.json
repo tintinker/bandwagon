@@ -2,11 +2,12 @@
   "name": "bandwagon",
   "version": "1.0.0",
   "description": "See how exotic your taste in music is",
-  "main": "index.js",
+  "main": "/srcbandwagon.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "nodemon --exec babel-node src/index.js",
-    "build": "webpack --mode development"
+    "start": "node src/bandwagon.js",
+    "test": "nodemon --exec babel-node src/bandwagon.js",
+    "build": "webpack --mode development --watch",
+    "deploy": "webpack --mode production"
   },
   "repository": {
     "type": "git",

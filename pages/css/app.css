@@ -11,6 +11,11 @@
   padding: 10px;
 }
 
+.jumbotron {
+  background: none;
+  color: white;
+}
+
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -36,4 +41,16 @@
   position: absolute;
   left: 5%;
   right: 5%;
+}
+
+.splash-page {
+  background-image: url("https://www.hdwallpaper.nu/wp-content/uploads/2017/03/razer-6.jpg");
+}
+
+.thin {
+  margin-top: 0em; margin-bottom: 0em;
+}
+
+.secondary-description {
+  font-size: 70%;
 }

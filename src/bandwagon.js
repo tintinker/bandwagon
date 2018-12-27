@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 let authflow = require('./authflow.js');
 let constants = require('./constants.js');
 let utils = require('./util.js');
@@ -12,6 +14,18 @@ let cors = require('cors');
 let app = authflow.getAuthApp(constants.general.scope);
 app.use(express.static(path.join(__dirname,'../pages')));
 
+app.get('/', function(request, response){
+  if(request.cookies
+    && request.cookies[constants.cookies.access_token]
+    && request.cookies[constants.cookies.refresh_token]) {
+      response.redirect('/you');
+    }
+  else {
+    console.log("sending to splash page");
+      response.sendFile(path.resolve(__dirname, '../pages/splash/index.html'));
+  }
+});
+
 app.get('/postcallback', function(request, response){
   response.redirect('/');
 });
@@ -19,6 +33,7 @@ app.get('/postcallback', function(request, response){
 app.get('/login', function(request, response){
   response.redirect('/sauce/authflow/login');
 });
+
 
 app.get('/sauce/api/userinfo', function(request, response){
 
@@ -45,10 +60,6 @@ app.get('/sauce/api/userinfo', function(request, response){
 app.get('/sauce/api/favartists', function(request, response){
 
   console.log("getting fav artists");
-  console.log('https://api.spotify.com/v1/me/top/artists?' +
-    querystring.stringify({
-      'time_range': request.query[constants.query.term]
-    }));
 
   utils.apiRequest('https://api.spotify.com/v1/me/top/artists?' +
     querystring.stringify({
@@ -58,7 +69,6 @@ app.get('/sauce/api/favartists', function(request, response){
     request.cookies[constants.cookies.refresh_token],
     true,
     function(favArtists) {
-      console.log(favArtists);
       response.send(JSON.stringify(favArtists.items));
     },
     function(newToken) {

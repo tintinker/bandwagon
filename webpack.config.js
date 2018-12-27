@@ -3,14 +3,13 @@ let nodeExternals = require('webpack-node-externals');
 let webpack = require('webpack'); //to access built-in plugins
 
 module.exports = {
-  watch: true,
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
     'axios': 'axios'
   },
   entry: {
-    home: path.resolve(__dirname, "views/home.page.js"),
+    you: path.resolve(__dirname, "views/you.page.js"),
     logout: path.resolve(__dirname, "views/logout.page.js")
   },
   output: {

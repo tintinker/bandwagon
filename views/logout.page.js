@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import LogoutView from './components/LogoutView.js'
 import ErrorView from './components/ErrorView.js'
+import constants from './constants.js'
 
 const app = document.getElementById("app");
 
-axios.get("http://localhost:4321/sauce/authflow/logout")
+axios.get(constants.urls.logout_backend)
   .then(response => {
       ReactDOM.render(<LogoutView />, app);
   })

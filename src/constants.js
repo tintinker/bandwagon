@@ -1,4 +1,4 @@
-const root_url = "http://localhost:4321";
+const root_url = "https://bandwagon.jtinker.org";
 const local_api_url = root_url + '/sauce/api';
 
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
     root: root_url,
     redirect: root_url + '/callback',
     login: root_url + '/login',
-    logout: root_url + '/logout',
+    logout: root_url + '/sauce/authflow/logout',
     favartists: local_api_url + '/favartists',
     userinfo: local_api_url + '/userinfo'
   },
@@ -18,7 +18,7 @@ module.exports = {
     login_required: 'login_required'
   },
   defaults: {
-    picture: "http://cdn.techgyd.com/ft.png"
+    picture: "https://cdn.techgyd.com/ft.png"
   },
   query: {
     term: "term"
